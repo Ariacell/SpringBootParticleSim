@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ContainerTest {
+public class BoundingBoxTest {
 
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
@@ -17,7 +17,7 @@ public class ContainerTest {
 
     @Test
     void screen_ShouldConstructItselfWIthoutErrorsInDefaultCase() {
-        Container screen = new Container(1,1);
+        BoundingBox screen = new BoundingBox(1,1);
         assertThat(screen.minX).isEqualTo(1);
         assertThat(screen.minY).isEqualTo(1);
         assertThat(screen.maxX).isEqualTo(WIDTH);
@@ -28,7 +28,7 @@ public class ContainerTest {
 
     @Test
     void screen_ShouldConstructItselfInNonTopLeftCorner() {
-        Container screen = new Container(OFFSET,OFFSET);
+        BoundingBox screen = new BoundingBox(OFFSET,OFFSET);
         assertThat(screen.minX).isEqualTo(OFFSET);
         assertThat(screen.minY).isEqualTo(OFFSET);
         assertThat(screen.maxX).isEqualTo(WIDTH+OFFSET-1);
@@ -39,7 +39,7 @@ public class ContainerTest {
     void screen_ShouldConstructItselfWithNonDefaultArguments() {
         int someHeight = 505;
         int someWidth = 909;
-        Container screen = new Container(OFFSET,OFFSET,someWidth,someHeight, FILL_COLOUR, BORDER_COLOUR);
+        BoundingBox screen = new BoundingBox(OFFSET,OFFSET,someWidth,someHeight, FILL_COLOUR, BORDER_COLOUR);
         assertThat(screen.minX).isEqualTo(OFFSET);
         assertThat(screen.minY).isEqualTo(OFFSET);
         assertThat(screen.maxX).isEqualTo(someWidth + OFFSET - 1);
@@ -53,7 +53,7 @@ public class ContainerTest {
 
         Graphics mockGraphics = Mockito.mock(Graphics.class);
 
-        Container screen = new Container(OFFSET,OFFSET, WIDTH, HEIGHT, FILL_COLOUR, BORDER_COLOUR);
+        BoundingBox screen = new BoundingBox(OFFSET,OFFSET, WIDTH, HEIGHT, FILL_COLOUR, BORDER_COLOUR);
         screen.draw(mockGraphics);
 
         InOrder orderVerifier = Mockito.inOrder(mockGraphics);

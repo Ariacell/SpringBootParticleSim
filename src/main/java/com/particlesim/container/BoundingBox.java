@@ -3,7 +3,7 @@ package com.particlesim.container;
 import java.awt.*;
 import lombok.Getter;
 
-public class Container {
+public class BoundingBox {
 
     private final int DEFAULT_WIDTH = 600;
     private final int DEFAULT_HEIGHT = 400;
@@ -18,7 +18,7 @@ public class Container {
     @Getter
     private Color borderColour;
  
-    public Container(int x,int y) {
+    public BoundingBox(int x,int y) {
         minX = x;
         minY = y;
         maxX = x+DEFAULT_WIDTH-1;
@@ -27,7 +27,7 @@ public class Container {
         borderColour = DEFAULT_BORDER_COLOUR;
     }
 
-    public Container(int x,int y, int width, int height, Color fillColour, Color borderColour) {
+    public BoundingBox(int x,int y, int width, int height, Color fillColour, Color borderColour) {
         minX = x;
         minY = y;
         maxX = x+width-1;

@@ -6,6 +6,8 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.particlesim.particles.ParticleFlock;
+
 import lombok.Getter;
 
 public class MainPanel extends JFrame {
@@ -24,19 +26,23 @@ public class MainPanel extends JFrame {
     private int canvasWidth, canvasHeight;
 
     @Getter
-    private Container container;
+    private BoundingBox container;
+    @Getter
+    private ParticleFlock particleFlock;
 
     public MainPanel(int width, int height) {
         canvasWidth = width;
         canvasHeight = height;
-        container = new Container(0, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
+        //Strange off by 1 bug on the x-axis, why?
+        container = new BoundingBox(1, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
+        particleFlock = new ParticleFlock(300);
 
         //Init the drawing panel:
         appPanel = new AppPanel();
         this.setSize(canvasWidth, canvasHeight);
-        // this.setLayout(new BorderLayout());
-        // this.add(appPanel, BorderLayout.CENTER);
-        // repaint();
+        this.setLayout(new BorderLayout());
+        this.add(appPanel, BorderLayout.CENTER);
+        
     }
 
 
@@ -50,6 +56,7 @@ public class MainPanel extends JFrame {
         @Override
         public void paintComponent(Graphics g) {
             container.draw(g);
+            particleFlock.draw(g);
         }
 
 
