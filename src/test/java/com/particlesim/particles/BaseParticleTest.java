@@ -9,6 +9,8 @@ import static org.mockito.Mockito.verify;
 
 import java.awt.Graphics;
 
+import com.particlesim.container.BoundingBox;
+
 
 public class BaseParticleTest {
     
@@ -39,5 +41,13 @@ public class BaseParticleTest {
         baseParticle.tick();
         assertThat(baseParticle.getX()).isEqualTo((int)(x+baseParticle.getSpeedX()));
         assertThat(baseParticle.getY()).isEqualTo((int)(x+baseParticle.getSpeedY()));
+    }
+
+    @Test
+    void baseParticle_shouldRemainWithinProvidedBounds(){
+        //Should we worry about non-topleft bounding boxes? If so where should the trnalsation logic go?
+        final BaseParticle baseParticle = new BaseParticle(x,y,20.0,45,1.0);
+        // BoundingBox bounds = new BoundingBox(x, y)
+        baseParticle.tick();
     }
 }
