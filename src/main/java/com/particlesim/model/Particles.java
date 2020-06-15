@@ -1,5 +1,7 @@
 package com.particlesim.model;
 
+import com.particlesim.particles.BaseParticle;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;

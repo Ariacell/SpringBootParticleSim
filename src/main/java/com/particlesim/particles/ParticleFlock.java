@@ -5,7 +5,6 @@ import java.util.List;
 
 import java.awt.*;
 
-import com.particlesim.model.BaseParticle;
 import com.particlesim.model.Particles;
 
 import lombok.Getter;
@@ -25,12 +24,20 @@ public class ParticleFlock {
             pList.add(new BaseParticle(
                 (int)(20 + Math.random() * (500)),
                 (int)(20 + Math.random() * (500)),
-                5.0,
-                90.0,
+                2.0,
+                Math.random() * 360,
                 1.0));
         }
         particleList = Particles.builder().
         particles(pList)
+        .build();
+    }
+
+    /*Constructor accepting a list of particles in case we want to 
+    create a flock from an existing list of particles*/
+    public ParticleFlock(List<BaseParticle> particleList){
+        this.particleList = Particles.builder()
+        .particles(particleList)
         .build();
     }
 
@@ -42,6 +49,6 @@ public class ParticleFlock {
     }
 
     public void tick(){
-
+        particleList.getParticles().stream().parallel().forEach(p -> p.tick());
     }
 }

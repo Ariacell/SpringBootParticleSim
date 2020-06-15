@@ -35,7 +35,7 @@ public class MainPanel extends JFrame {
         canvasHeight = height;
         //Strange off by 1 bug on the x-axis, why?
         container = new BoundingBox(1, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
-        particleFlock = new ParticleFlock(300);
+        particleFlock = new ParticleFlock(10);
 
         //Init the drawing panel:
         appPanel = new AppPanel();
@@ -43,6 +43,27 @@ public class MainPanel extends JFrame {
         this.setLayout(new BorderLayout());
         this.add(appPanel, BorderLayout.CENTER);
         
+        simulationStart();
+    }
+
+    /*No tests around the update logic yet because I'm not sure
+    what exactly I want to test here. WIP */
+    public void simulationStart() {
+        Thread simThread = new Thread() {
+            public void run() {
+                while(true){
+                    updateSim();
+                    repaint();
+                    try{
+                        Thread.sleep(1000/FRAME_RATE);
+                    } catch (InterruptedException ex) {}
+                }
+            }
+        };
+        simThread.start();
+    }
+    public void updateSim() {
+        particleFlock.tick();
     }
 
 

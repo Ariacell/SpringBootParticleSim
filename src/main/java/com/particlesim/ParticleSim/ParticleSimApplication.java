@@ -1,7 +1,5 @@
 package com.particlesim.ParticleSim;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.particlesim.container.MainPanel;
 
