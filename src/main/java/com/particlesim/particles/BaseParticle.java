@@ -31,7 +31,4 @@ public class BaseParticle {
         y = (int)(y + speedY);
     }
 
-    public void tick()
-
-
 }
