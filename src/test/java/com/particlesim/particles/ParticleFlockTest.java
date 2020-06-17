@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.particlesim.container.BoundingBox;
+
 import java.awt.*;
 
 
@@ -22,18 +24,18 @@ import static org.mockito.Mockito.verify;
 public class ParticleFlockTest {
 
     @Mock
-    List<BaseParticle> mockParticleList = new ArrayList<BaseParticle>(2);
-    
+    BoundingBox boxMock;
+
     @Test
     void particleFlock_ShouldConstructWithWantedNumberOfParticles() {
-        ParticleFlock particleFlock = new ParticleFlock(20);
+        ParticleFlock particleFlock = new ParticleFlock(20, boxMock);
         assertThat(particleFlock.getParticleList().getParticles().size()).isEqualTo(20);
     }
 
     @Test
     void draw_ShouldCallDrawForEachParticleInFlock(){
         Graphics mockGraphics = Mockito.mock(Graphics.class);
-        ParticleFlock particleFlock = new ParticleFlock(20);
+        ParticleFlock particleFlock = new ParticleFlock(20, boxMock);
         particleFlock.draw(mockGraphics);
         verify(mockGraphics, times(20)).drawOval(anyInt(), anyInt(), anyInt(), anyInt());
     }
@@ -46,11 +48,10 @@ public class ParticleFlockTest {
         List<BaseParticle> pList = new ArrayList<BaseParticle>();
         pList.add(p1);
         pList.add(p2);
-        ParticleFlock particleFlock = new ParticleFlock(pList);
+        ParticleFlock particleFlock = new ParticleFlock(pList, boxMock);
 
         particleFlock.tick();
-        p1.tick();
-        p2.tick();
+        pList.forEach(p -> p.tick());
 
         assertThat(particleFlock.getParticleList().getParticles().get(0).getX()).isEqualTo(p1.getX());
         assertThat(particleFlock.getParticleList().getParticles().get(0).getY()).isEqualTo(p1.getY());

@@ -5,25 +5,31 @@ import java.util.List;
 
 import java.awt.*;
 
+import com.particlesim.container.BoundingBox;
 import com.particlesim.model.Particles;
 
 import lombok.Getter;
 
+/* It is the responsibility of the ParticleFlock to store the context for
+each individual particle it is shepherding to access as needed.*/
 public class ParticleFlock {
 
     @Getter
     private Particles particleList;
+
+    @Getter
+    private BoundingBox boundingBox;
     
     /* Hardcoded values here for now for particle attributes, will change from hardcoded once 
     tests are written to force me to do so, getting poc off the ground first*/
-    public ParticleFlock(int numParticles){
+    public ParticleFlock(int numParticles, BoundingBox boundingContainer){
         List<BaseParticle> pList = new ArrayList<BaseParticle>();
         for(int i = 0; i < numParticles; i++) {
             /* TODO: finish this initialisation (Particles should probably
              be the ones to control the random based on single parametre passed to flock)*/
             pList.add(new BaseParticle(
-                (int)(20 + Math.random() * (500)),
-                (int)(20 + Math.random() * (500)),
+                (int)(200 + Math.random() * (100)),
+                (int)(200 + Math.random() * (100)),
                 2.0,
                 Math.random() * 360,
                 1.0));
@@ -31,14 +37,18 @@ public class ParticleFlock {
         particleList = Particles.builder().
         particles(pList)
         .build();
+
+        boundingBox = boundingContainer;
     }
 
     /*Constructor accepting a list of particles in case we want to 
     create a flock from an existing list of particles*/
-    public ParticleFlock(List<BaseParticle> particleList){
+    public ParticleFlock(List<BaseParticle> particleList, BoundingBox boundingContainer){
         this.particleList = Particles.builder()
         .particles(particleList)
         .build();
+
+        boundingBox = boundingContainer;
     }
 
     public void draw(Graphics g){

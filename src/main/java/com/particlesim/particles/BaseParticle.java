@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+/* The Base Particle class for storing individual particle attributes, with
+knowledge of the outside world only being passed in through context arguments
+in update methods */
 public class BaseParticle {
     private int x,y;
     private double speedX,speedY;
