@@ -37,7 +37,7 @@ public class ParticleFlockTest {
         Graphics mockGraphics = Mockito.mock(Graphics.class);
         ParticleFlock particleFlock = new ParticleFlock(20, boxMock);
         particleFlock.draw(mockGraphics);
-        verify(mockGraphics, times(20)).drawOval(anyInt(), anyInt(), anyInt(), anyInt());
+        verify(mockGraphics, times(20)).drawLine(anyInt(), anyInt(), anyInt(), anyInt());
     }
 
     @Test 
@@ -48,10 +48,10 @@ public class ParticleFlockTest {
         List<BaseParticle> pList = new ArrayList<BaseParticle>();
         pList.add(p1);
         pList.add(p2);
-        ParticleFlock particleFlock = new ParticleFlock(pList, boxMock);
+        ParticleFlock particleFlock = new ParticleFlock(pList, new BoundingBox(500, 500));
 
         particleFlock.tick();
-        pList.forEach(p -> p.tick());
+        pList.forEach(p -> p.tick(particleFlock.getContext()));
 
         assertThat(particleFlock.getParticleList().getParticles().get(0).getX()).isEqualTo(p1.getX());
         assertThat(particleFlock.getParticleList().getParticles().get(0).getY()).isEqualTo(p1.getY());

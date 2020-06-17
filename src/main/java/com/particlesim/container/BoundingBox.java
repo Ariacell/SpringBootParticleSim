@@ -10,6 +10,7 @@ public class BoundingBox {
     private final Color DEFAULT_BORDER_COLOUR = Color.BLACK;
     private final Color DEFAULT_FILL_COLOUR = Color.LIGHT_GRAY;
 
+    @Getter
     int minX,maxX,minY,maxY;
 
     @Getter

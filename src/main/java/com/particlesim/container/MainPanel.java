@@ -19,7 +19,7 @@ public class MainPanel extends JFrame {
      */
     private static final long serialVersionUID = 107301013674641039L;
 
-    private static final int FRAME_RATE = 30;
+    private static final int FRAME_RATE = 60;
 
     private BufferedImage particleImg;
     int[] imgBuffer;
@@ -40,8 +40,8 @@ public class MainPanel extends JFrame {
         canvasWidth = width;
         canvasHeight = height;
         // Strange off by 1 bug on the x-axis, why?
-        container = new BoundingBox(1, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
-        particleFlock = new ParticleFlock(500, container);
+        container = new BoundingBox(0, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
+        particleFlock = new ParticleFlock(1000, container);
 
         /* Set up the base img to quickly clear our buffer back to baseline */
         this.baseImg = new BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB);
@@ -90,7 +90,7 @@ public class MainPanel extends JFrame {
 
     public void updateSim() {
         particleFlock.tick();
-        //particleImg.setData(baseImg.getRaster());
+        particleImg.setData(baseImg.getRaster());
         for(BaseParticle p : this.particleFlock.getParticleList().getParticles()){
             particleImg.setRGB(p.getX(), p.getY(), Color.WHITE.getRGB());
         }

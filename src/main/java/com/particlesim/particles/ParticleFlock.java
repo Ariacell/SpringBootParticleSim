@@ -18,7 +18,7 @@ public class ParticleFlock {
     private Particles particleList;
 
     @Getter
-    private BoundingBox boundingBox;
+    private ParticleContext context;
     
     /* Hardcoded values here for now for particle attributes, will change from hardcoded once 
     tests are written to force me to do so, getting poc off the ground first*/
@@ -38,7 +38,7 @@ public class ParticleFlock {
         particles(pList)
         .build();
 
-        boundingBox = boundingContainer;
+        context = ParticleContext.builder().particleBounds(boundingContainer).build();
     }
 
     /*Constructor accepting a list of particles in case we want to 
@@ -48,7 +48,7 @@ public class ParticleFlock {
         .particles(particleList)
         .build();
 
-        boundingBox = boundingContainer;
+        context = ParticleContext.builder().particleBounds(boundingContainer).build();
     }
 
     public void draw(Graphics g){
@@ -59,6 +59,6 @@ public class ParticleFlock {
     }
 
     public void tick(){
-        particleList.getParticles().stream().parallel().forEach(p -> p.tick());
+        particleList.getParticles().stream().parallel().forEach(p -> p.tick(this.context));
     }
 }
