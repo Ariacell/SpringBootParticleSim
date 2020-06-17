@@ -7,6 +7,7 @@ import java.awt.image.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.particlesim.particles.BaseParticle;
 import com.particlesim.particles.ParticleFlock;
 
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class MainPanel extends JFrame {
 
     private BufferedImage particleImg;
     int[] imgBuffer;
+    private BufferedImage baseImg;
 
     @Getter
     private AppPanel appPanel;
@@ -40,6 +42,9 @@ public class MainPanel extends JFrame {
         // Strange off by 1 bug on the x-axis, why?
         container = new BoundingBox(1, 0, canvasWidth, canvasHeight, Color.BLUE, Color.BLACK);
         particleFlock = new ParticleFlock(10);
+
+        /* Set up the base img to quickly clear our buffer back to baseline */
+        this.baseImg = new BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB);
 
         /*
          * Image Buffer code, we only new it up once, and only update the particles x
@@ -85,6 +90,10 @@ public class MainPanel extends JFrame {
 
     public void updateSim() {
         particleFlock.tick();
+        particleImg.setData(baseImg.getRaster());
+        for(BaseParticle p : this.particleFlock.getParticleList().getParticles()){
+            particleImg.setRGB(p.getX(), p.getY(), Color.WHITE.getRGB());
+        }
     }
 
     private class AppPanel extends JPanel {
@@ -96,9 +105,9 @@ public class MainPanel extends JFrame {
 
         @Override
         public void paintComponent(Graphics g) {
-            container.draw(g);
+            // container.draw(g);
             g.drawImage(particleImg,0,0,null);
-            particleFlock.draw(g);
+            // particleFlock.draw(g);
         }
 
     }
