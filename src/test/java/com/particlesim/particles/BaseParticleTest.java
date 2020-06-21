@@ -26,8 +26,8 @@ public class BaseParticleTest {
     @Test
     void baseParticle_shouldInstantiateWithCorrectSpeeds() {
         final BaseParticle baseParticle = new BaseParticle(x, y, 20.0, 45, 1.0);
-        assertThat(baseParticle.getSpeedX() - 20 * (1 / Math.sqrt(2))).isLessThan(TOLERANCE);
-        assertThat(baseParticle.getSpeedY() - 20 * (1 / Math.sqrt(2))).isLessThan(TOLERANCE);
+        assertThat(baseParticle.getVelocity().getX() - 20 * (1 / Math.sqrt(2))).isLessThan(TOLERANCE);
+        assertThat(baseParticle.getVelocity().getY() - 20 * (1 / Math.sqrt(2))).isLessThan(TOLERANCE);
     }
 
     @Test
@@ -46,8 +46,8 @@ public class BaseParticleTest {
         
         baseParticle.tick(particleContext);
 
-        assertThat(baseParticle.getLocation().getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
-        assertThat(baseParticle.getLocation().getY()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedY())));
+        assertThat(baseParticle.getLocation().getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getVelocity().getX())));
+        assertThat(baseParticle.getLocation().getY()).isEqualTo((int) (x + Math.ceil(baseParticle.getVelocity().getY())));
     }
 
     @Test
@@ -60,12 +60,12 @@ public class BaseParticleTest {
         baseParticle.tick(particleContext);
         
         assertThat(baseParticle.getLocation()).isEqualTo(new Vector2D<Integer>(
-            (int) (x + Math.ceil(baseParticle.getSpeedX())),
-            (int) (y + Math.ceil(baseParticle.getSpeedY()))));
+            (int) (x + Math.ceil(baseParticle.getVelocity().getX())),
+            (int) (y + Math.ceil(baseParticle.getVelocity().getY()))));
     }
 
     @Test
-    void tickWithContext_shouldMakeParticleRemainWithinProvidedBounds() {
+    void tickWithContext_shouldBounceParticleRemainWithinProvidedBounds() {
 
         int minCorner = 20;
         int maxCorner = 50;
@@ -80,21 +80,21 @@ public class BaseParticleTest {
         .build();
         final BaseParticle bottomRightEscapingParticle = new BaseParticle(maxCornerAdjacentPoint, maxCornerAdjacentPoint, speed, downRightAngle, 1.0);
         final BaseParticle topLeftEscapingParticle = new BaseParticle(minCornerAdjacentPoint, minCornerAdjacentPoint, speed, upLeftAngle, 1.0);
-        double bottomParticleSpeedX = bottomRightEscapingParticle.getSpeedX();
-        double bottomParticleSpeedY = bottomRightEscapingParticle.getSpeedY();
-        double topParticleSpeedX = topLeftEscapingParticle.getSpeedX();
-        double topParticleSpeedY = topLeftEscapingParticle.getSpeedY();
+        double bottomParticleSpeedX = bottomRightEscapingParticle.getVelocity().getX();
+        double bottomParticleSpeedY = bottomRightEscapingParticle.getVelocity().getY();
+        double topParticleSpeedX = topLeftEscapingParticle.getVelocity().getX();
+        double topParticleSpeedY = topLeftEscapingParticle.getVelocity().getY();
 
         bottomRightEscapingParticle.tick(particleContext);
         topLeftEscapingParticle.tick(particleContext);
 
         assertThat(bottomRightEscapingParticle.getLocation().getX()).isEqualTo(particleContext.getParticleBounds().getMaxX());
         assertThat(bottomRightEscapingParticle.getLocation().getY()).isEqualTo(particleContext.getParticleBounds().getMaxY());
-        assertThat(bottomRightEscapingParticle.getSpeedX()).isCloseTo(-bottomParticleSpeedX, Offset.offset(0.001));
-        assertThat(bottomRightEscapingParticle.getSpeedY()).isCloseTo(-bottomParticleSpeedY, Offset.offset(0.001));
+        assertThat(bottomRightEscapingParticle.getVelocity().getX()).isCloseTo(-bottomParticleSpeedX, Offset.offset(0.001));
+        assertThat(bottomRightEscapingParticle.getVelocity().getY()).isCloseTo(-bottomParticleSpeedY, Offset.offset(0.001));
         assertThat(topLeftEscapingParticle.getLocation().getX()).isEqualTo(particleContext.getParticleBounds().getMinY());
         assertThat(topLeftEscapingParticle.getLocation().getY()).isEqualTo(particleContext.getParticleBounds().getMinY());
-        assertThat(topLeftEscapingParticle.getSpeedX()).isCloseTo(-topParticleSpeedX, Offset.offset(0.001));
-        assertThat(topLeftEscapingParticle.getSpeedY()).isCloseTo(-topParticleSpeedY, Offset.offset(0.001));
+        assertThat(topLeftEscapingParticle.getVelocity().getX()).isCloseTo(-topParticleSpeedX, Offset.offset(0.001));
+        assertThat(topLeftEscapingParticle.getVelocity().getY()).isCloseTo(-topParticleSpeedY, Offset.offset(0.001));
     }
 }

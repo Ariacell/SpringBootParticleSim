@@ -21,14 +21,16 @@ public class BaseParticle {
     protected static final double PARTICLE_ANGLE_DOWN = 270;
 
     private Vector2D<Integer> location;
-    private double speedX,speedY;
+    private Vector2D<Double> velocity; 
     private double angle;
     private double mass;
 
     public BaseParticle(int x, int y, double speed, double angle, double mass) {
         this.location = new Vector2D<Integer>(x, y);
-        this.speedX = (speed * Math.cos(Math.toRadians(angle)));
-        this.speedY = (-speed * Math.sin(Math.toRadians(angle)));
+        this.velocity = new Vector2D<Double>(
+            (speed * Math.cos(Math.toRadians(angle))),
+            (-speed * Math.sin(Math.toRadians(angle)))
+        );
         this.angle = angle;
         this.mass = mass;
     }
@@ -39,24 +41,24 @@ public class BaseParticle {
 
     public void tick(ParticleContext pCtx){
         BoundingBox bounds = pCtx.getParticleBounds();
-        int newX = (int)(location.getX() + Math.signum(speedX)*Math.ceil(Math.abs(speedX)));
+        int newX = (int)(location.getX() + Math.signum(velocity.getX())*Math.ceil(Math.abs(velocity.getX())));
         if (newX >= bounds.getMaxX()) {
             location.setX(bounds.getMaxX());
-            speedX = -speedX;
+            velocity.setX(-velocity.getX());
         } else if (newX <= bounds.getMinX()){
             location.setX(bounds.getMinX());
-            speedX = -speedX;
+            velocity.setX(-velocity.getX());
         } else {
             location.setX(newX);
         }
 
-        int newY = (int)(location.getY() + Math.signum(speedY)*Math.ceil(Math.abs(speedY)));
+        int newY = (int)(location.getY() + Math.signum(velocity.getY())*Math.ceil(Math.abs(velocity.getY())));
         if (newY >= bounds.getMaxY()) {
             location.setY(bounds.getMaxY());
-            speedY = -speedY;
+            velocity.setY(-velocity.getY());
         } else if (newY <= bounds.getMinY()){
             location.setY(bounds.getMinY());
-            speedY = -speedY;
+            velocity.setY(-velocity.getY());
         } else {
             location.setY(newY);
         }
