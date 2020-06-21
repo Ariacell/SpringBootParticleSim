@@ -46,8 +46,8 @@ public class BaseParticleTest {
         
         baseParticle.tick(particleContext);
 
-        assertThat(baseParticle.getX()).isEqualTo((int) (x + baseParticle.getSpeedX()));
-        assertThat(baseParticle.getY()).isEqualTo((int) (x + baseParticle.getSpeedY()));
+        assertThat(baseParticle.getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
+        assertThat(baseParticle.getY()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedY())));
     }
 
     @Test
@@ -59,8 +59,8 @@ public class BaseParticleTest {
 
         baseParticle.tick(particleContext);
         
-        assertThat(baseParticle.getX()).isEqualTo((int) (x + baseParticle.getSpeedX()));
-        assertThat(baseParticle.getY()).isEqualTo((int) (y + baseParticle.getSpeedY()));
+        assertThat(baseParticle.getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
+        assertThat(baseParticle.getY()).isEqualTo((int) (y + Math.ceil(baseParticle.getSpeedY())));
     }
 
     @Test

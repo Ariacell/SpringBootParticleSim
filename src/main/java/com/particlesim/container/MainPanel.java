@@ -64,6 +64,7 @@ public class MainPanel extends JFrame {
         this.setSize(canvasWidth, canvasHeight);
         this.setLayout(new BorderLayout());
         this.add(appPanel, BorderLayout.CENTER);
+        this.pack();
 
         simulationStart();
     }
@@ -102,6 +103,12 @@ public class MainPanel extends JFrame {
          *
          */
         private static final long serialVersionUID = 4192031073930160758L;
+
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(canvasWidth, canvasHeight);
+        }
 
         @Override
         public void paintComponent(Graphics g) {

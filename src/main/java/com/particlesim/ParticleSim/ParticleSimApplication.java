@@ -22,7 +22,7 @@ public class ParticleSimApplication implements CommandLineRunner {
 		// jFrame.setSize(600, 400);
 		// jFrame.setTitle("Something Simulator");
 
-		MainPanel mainPanel = new MainPanel(500, 550);
+		MainPanel mainPanel = new MainPanel(500, 500);
 		mainPanel.setVisible(true);
 	}
 

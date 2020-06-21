@@ -39,7 +39,7 @@ public class BaseParticle {
 
     public void tick(ParticleContext pCtx){
         BoundingBox bounds = pCtx.getParticleBounds();
-        int newX = (int)(x + speedX);
+        int newX = (int)(x + Math.signum(speedX)*Math.ceil(Math.abs(speedX)));
         if (newX >= bounds.getMaxX()) {
             x = bounds.getMaxX();
             speedX = -speedX;
@@ -50,7 +50,7 @@ public class BaseParticle {
             x = newX;
         }
 
-        int newY = (int)(y + speedY);
+        int newY = (int)(y + Math.signum(speedY)*Math.ceil(Math.abs(speedY)));
         if (newY >= bounds.getMaxY()) {
             y = bounds.getMaxY();
             speedY = -speedY;
