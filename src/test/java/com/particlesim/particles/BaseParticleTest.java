@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verify;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.lang.reflect.Array;
 
 import com.particlesim.container.BoundingBox;
+import com.particlesim.model.Vector2D;
 
 public class BaseParticleTest {
 
@@ -46,8 +46,8 @@ public class BaseParticleTest {
         
         baseParticle.tick(particleContext);
 
-        assertThat(baseParticle.getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
-        assertThat(baseParticle.getY()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedY())));
+        assertThat(baseParticle.getLocation().getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
+        assertThat(baseParticle.getLocation().getY()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedY())));
     }
 
     @Test
@@ -59,8 +59,9 @@ public class BaseParticleTest {
 
         baseParticle.tick(particleContext);
         
-        assertThat(baseParticle.getX()).isEqualTo((int) (x + Math.ceil(baseParticle.getSpeedX())));
-        assertThat(baseParticle.getY()).isEqualTo((int) (y + Math.ceil(baseParticle.getSpeedY())));
+        assertThat(baseParticle.getLocation()).isEqualTo(new Vector2D<Integer>(
+            (int) (x + Math.ceil(baseParticle.getSpeedX())),
+            (int) (y + Math.ceil(baseParticle.getSpeedY()))));
     }
 
     @Test
@@ -87,12 +88,12 @@ public class BaseParticleTest {
         bottomRightEscapingParticle.tick(particleContext);
         topLeftEscapingParticle.tick(particleContext);
 
-        assertThat(bottomRightEscapingParticle.getX()).isEqualTo(particleContext.getParticleBounds().getMaxX());
-        assertThat(bottomRightEscapingParticle.getY()).isEqualTo(particleContext.getParticleBounds().getMaxY());
+        assertThat(bottomRightEscapingParticle.getLocation().getX()).isEqualTo(particleContext.getParticleBounds().getMaxX());
+        assertThat(bottomRightEscapingParticle.getLocation().getY()).isEqualTo(particleContext.getParticleBounds().getMaxY());
         assertThat(bottomRightEscapingParticle.getSpeedX()).isCloseTo(-bottomParticleSpeedX, Offset.offset(0.001));
         assertThat(bottomRightEscapingParticle.getSpeedY()).isCloseTo(-bottomParticleSpeedY, Offset.offset(0.001));
-        assertThat(topLeftEscapingParticle.getX()).isEqualTo(particleContext.getParticleBounds().getMinY());
-        assertThat(topLeftEscapingParticle.getY()).isEqualTo(particleContext.getParticleBounds().getMinY());
+        assertThat(topLeftEscapingParticle.getLocation().getX()).isEqualTo(particleContext.getParticleBounds().getMinY());
+        assertThat(topLeftEscapingParticle.getLocation().getY()).isEqualTo(particleContext.getParticleBounds().getMinY());
         assertThat(topLeftEscapingParticle.getSpeedX()).isCloseTo(-topParticleSpeedX, Offset.offset(0.001));
         assertThat(topLeftEscapingParticle.getSpeedY()).isCloseTo(-topParticleSpeedY, Offset.offset(0.001));
     }

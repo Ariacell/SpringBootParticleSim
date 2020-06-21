@@ -1,12 +1,10 @@
 package com.particlesim.particles;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.particlesim.container.BoundingBox;
@@ -16,8 +14,6 @@ import java.awt.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -53,9 +49,9 @@ public class ParticleFlockTest {
         particleFlock.tick();
         pList.forEach(p -> p.tick(particleFlock.getContext()));
 
-        assertThat(particleFlock.getParticleList().getParticles().get(0).getX()).isEqualTo(p1.getX());
-        assertThat(particleFlock.getParticleList().getParticles().get(0).getY()).isEqualTo(p1.getY());
-        assertThat(particleFlock.getParticleList().getParticles().get(1).getX()).isEqualTo(p2.getX());
-        assertThat(particleFlock.getParticleList().getParticles().get(1).getY()).isEqualTo(p2.getY());
+        assertThat(particleFlock.getParticleList().getParticles().get(0).getLocation().getX()).isEqualTo(p1.getLocation().getX());
+        assertThat(particleFlock.getParticleList().getParticles().get(0).getLocation().getY()).isEqualTo(p1.getLocation().getY());
+        assertThat(particleFlock.getParticleList().getParticles().get(1).getLocation().getX()).isEqualTo(p2.getLocation().getX());
+        assertThat(particleFlock.getParticleList().getParticles().get(1).getLocation().getY()).isEqualTo(p2.getLocation().getY());
     }
 }

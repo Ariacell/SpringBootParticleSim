@@ -93,7 +93,7 @@ public class MainPanel extends JFrame {
         particleFlock.tick();
         particleImg.setData(baseImg.getRaster());
         for(BaseParticle p : this.particleFlock.getParticleList().getParticles()){
-            particleImg.setRGB(p.getX(), p.getY(), Color.WHITE.getRGB());
+            particleImg.setRGB(p.getLocation().getX(), p.getLocation().getY(), Color.WHITE.getRGB());
         }
     }
 

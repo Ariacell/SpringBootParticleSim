@@ -3,6 +3,7 @@ package com.particlesim.particles;
 import java.awt.*;
 
 import com.particlesim.container.BoundingBox;
+import com.particlesim.model.Vector2D;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,14 +20,13 @@ public class BaseParticle {
     protected static final double PARTICLE_ANGLE_UP = 90;
     protected static final double PARTICLE_ANGLE_DOWN = 270;
 
-    private int x,y;
+    private Vector2D<Integer> location;
     private double speedX,speedY;
     private double angle;
     private double mass;
 
     public BaseParticle(int x, int y, double speed, double angle, double mass) {
-        this.x = x;
-        this.y = y;
+        this.location = new Vector2D<Integer>(x, y);
         this.speedX = (speed * Math.cos(Math.toRadians(angle)));
         this.speedY = (-speed * Math.sin(Math.toRadians(angle)));
         this.angle = angle;
@@ -34,31 +34,31 @@ public class BaseParticle {
     }
 
     public void draw(Graphics g){
-        g.drawLine(x, y, x, y);
+        g.drawLine(location.getX(), location.getY(), location.getX(), location.getY());
     }
 
     public void tick(ParticleContext pCtx){
         BoundingBox bounds = pCtx.getParticleBounds();
-        int newX = (int)(x + Math.signum(speedX)*Math.ceil(Math.abs(speedX)));
+        int newX = (int)(location.getX() + Math.signum(speedX)*Math.ceil(Math.abs(speedX)));
         if (newX >= bounds.getMaxX()) {
-            x = bounds.getMaxX();
+            location.setX(bounds.getMaxX());
             speedX = -speedX;
         } else if (newX <= bounds.getMinX()){
-            x = bounds.getMinX();
+            location.setX(bounds.getMinX());
             speedX = -speedX;
         } else {
-            x = newX;
+            location.setX(newX);
         }
 
-        int newY = (int)(y + Math.signum(speedY)*Math.ceil(Math.abs(speedY)));
+        int newY = (int)(location.getY() + Math.signum(speedY)*Math.ceil(Math.abs(speedY)));
         if (newY >= bounds.getMaxY()) {
-            y = bounds.getMaxY();
+            location.setY(bounds.getMaxY());
             speedY = -speedY;
         } else if (newY <= bounds.getMinY()){
-            y = bounds.getMinY();
+            location.setY(bounds.getMinY());
             speedY = -speedY;
         } else {
-            y = newY;
+            location.setY(newY);
         }
     }
 
