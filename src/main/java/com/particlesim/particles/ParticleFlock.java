@@ -30,7 +30,7 @@ public class ParticleFlock {
             pList.add(new BaseParticle(
                 (int)(200 + Math.random() * (100)),
                 (int)(200 + Math.random() * (100)),
-                2.0,
+                8.0,
                 Math.random() * 360,
                 1.0));
         }
